@@ -1,9 +1,15 @@
 import { Head, Link, router } from '@inertiajs/react';
 import DashboardLayout from '@/Components/Layouts/DashboardLayout';
+import PageHeader from '@/Components/Dashboard/PageHeader';
 import Card from '@/Components/UI/Card';
 import Button from '@/Components/UI/Button';
 
 export default function RolesIndex({ roles, filters }) {
+    const breadcrumbs = [
+        { label: 'Dashboard', href: '/admin/dashboard' },
+        { label: 'Roles' },
+    ];
+
     const handleDelete = (roleId) => {
         if (confirm('Are you sure you want to delete this role?')) {
             router.delete(`/admin/roles/${roleId}`);
@@ -11,20 +17,25 @@ export default function RolesIndex({ roles, filters }) {
     };
 
     return (
-        <DashboardLayout title="Roles">
+        <DashboardLayout>
             <Head title="Roles" />
 
-            <Card>
-                <div className="flex flex-col gap-4 border-b border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-900">All Roles</h2>
-                        <p className="text-sm text-gray-500">Manage user roles</p>
-                    </div>
-                    <Link href="/admin/roles/create">
-                        <Button>Add Role</Button>
-                    </Link>
-                </div>
+            <PageHeader 
+                title="Roles" 
+                description="Manage user roles and their permissions"
+                breadcrumbs={breadcrumbs}
+            >
+                <Link href="/admin/roles/create">
+                    <Button>
+                        <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Add Role
+                    </Button>
+                </Link>
+            </PageHeader>
 
+            <Card>
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
@@ -45,7 +56,7 @@ export default function RolesIndex({ roles, filters }) {
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                             {roles?.data?.map((role) => (
-                                <tr key={role.id}>
+                                <tr key={role.id} className="hover:bg-gray-50">
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <span className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${
                                             role.name === 'super-admin' 
@@ -58,10 +69,10 @@ export default function RolesIndex({ roles, filters }) {
                                         </span>
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {role.permissions_count} permissions
+                                        <span className="font-medium text-gray-900">{role.permissions_count}</span> permissions
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {role.users_count} users
+                                        <span className="font-medium text-gray-900">{role.users_count}</span> users
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                         <Link

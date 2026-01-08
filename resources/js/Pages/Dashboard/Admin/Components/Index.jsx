@@ -14,6 +14,8 @@ export default function ComponentsIndex() {
     const [loading, setLoading] = useState(false);
     const [checked, setChecked] = useState(false);
     const [activeTab, setActiveTab] = useState(0);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const breadcrumbs = [
         { label: 'Dashboard', href: '/admin/dashboard' },
@@ -21,10 +23,12 @@ export default function ComponentsIndex() {
     ];
 
     const tabs = [
-        { label: 'Buttons', icon: 'mouse' },
-        { label: 'Forms', icon: 'edit' },
-        { label: 'Feedback', icon: 'bell' },
-        { label: 'Cards', icon: 'card' },
+        { label: 'Buttons' },
+        { label: 'Forms' },
+        { label: 'Feedback' },
+        { label: 'Data Display' },
+        { label: 'Navigation' },
+        { label: 'Overlays' },
     ];
 
     const handleLoading = () => {
@@ -43,13 +47,13 @@ export default function ComponentsIndex() {
             />
 
             {/* Tabs */}
-            <div className="mb-6">
-                <div className="flex flex-wrap gap-2 p-1 bg-gray-100 rounded-lg w-fit">
+            <div className="mb-6 overflow-x-auto">
+                <div className="flex gap-1 p-1 bg-gray-100 rounded-lg w-fit min-w-full sm:min-w-0">
                     {tabs.map((tab, index) => (
                         <button
                             key={index}
                             onClick={() => setActiveTab(index)}
-                            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all whitespace-nowrap ${
                                 activeTab === index
                                     ? 'bg-white text-primary-600 shadow-sm'
                                     : 'text-gray-600 hover:text-gray-900'
@@ -116,6 +120,34 @@ export default function ComponentsIndex() {
                             </Button>
                         </div>
                     </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Button Groups</h3>
+                        <div className="flex flex-wrap gap-4">
+                            <div className="inline-flex rounded-lg shadow-sm">
+                                <Button className="rounded-r-none border-r-0">Left</Button>
+                                <Button className="rounded-none border-x-0">Middle</Button>
+                                <Button className="rounded-l-none border-l-0">Right</Button>
+                            </div>
+                            <div className="inline-flex rounded-lg shadow-sm">
+                                <Button variant="secondary" className="rounded-r-none">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6z" />
+                                    </svg>
+                                </Button>
+                                <Button variant="secondary" className="rounded-none border-x border-gray-300">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+                                    </svg>
+                                </Button>
+                                <Button variant="secondary" className="rounded-l-none">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                    </svg>
+                                </Button>
+                            </div>
+                        </div>
+                    </Card>
                 </div>
             )}
 
@@ -125,59 +157,94 @@ export default function ComponentsIndex() {
                     <Card className="p-6">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Text Inputs</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
-                            <TextInput
-                                label="Default Input"
-                                placeholder="Enter text..."
-                            />
-                            <TextInput
-                                label="With Hint"
-                                placeholder="Enter email..."
-                                hint="We'll never share your email"
-                            />
-                            <TextInput
-                                label="Required Field"
-                                placeholder="Required..."
-                                required
-                            />
-                            <TextInput
-                                label="With Error"
-                                error="This field is required"
-                            />
-                            <TextInput
-                                label="Disabled"
-                                disabled
-                                value="Disabled input"
-                            />
+                            <TextInput label="Default Input" placeholder="Enter text..." />
+                            <TextInput label="With Hint" placeholder="Enter email..." hint="We'll never share your email" />
+                            <TextInput label="Required Field" placeholder="Required..." required />
+                            <TextInput label="With Error" error="This field is required" />
+                            <TextInput label="Disabled" disabled value="Disabled input" />
                         </div>
                     </Card>
 
                     <Card className="p-6">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Password Input</h3>
                         <div className="max-w-md">
-                            <PasswordInput
-                                label="Password"
-                                placeholder="Enter password..."
-                            />
+                            <PasswordInput label="Password" placeholder="Enter password..." />
                         </div>
                     </Card>
 
                     <Card className="p-6">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Checkbox</h3>
                         <div className="space-y-3">
-                            <Checkbox
-                                label="Default checkbox"
-                                checked={checked}
-                                onChange={(e) => setChecked(e.target.checked)}
+                            <Checkbox label="Default checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} />
+                            <Checkbox label="Checked checkbox" checked={true} onChange={() => {}} />
+                            <Checkbox label="Disabled checkbox" disabled />
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Radio Buttons</h3>
+                        <div className="space-y-3">
+                            <label className="flex items-center cursor-pointer">
+                                <input type="radio" name="radio-demo" defaultChecked className="h-4 w-4 text-primary-600 border-gray-300 focus:ring-primary-500" />
+                                <span className="ml-2 text-sm text-gray-700">Option 1</span>
+                            </label>
+                            <label className="flex items-center cursor-pointer">
+                                <input type="radio" name="radio-demo" className="h-4 w-4 text-primary-600 border-gray-300 focus:ring-primary-500" />
+                                <span className="ml-2 text-sm text-gray-700">Option 2</span>
+                            </label>
+                            <label className="flex items-center cursor-pointer">
+                                <input type="radio" name="radio-demo" disabled className="h-4 w-4 text-primary-600 border-gray-300 focus:ring-primary-500" />
+                                <span className="ml-2 text-sm text-gray-400">Disabled option</span>
+                            </label>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Select</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Default Select</label>
+                                <select className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+                                    <option>Select an option</option>
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                    <option>Option 3</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Disabled Select</label>
+                                <select disabled className="w-full rounded-lg border-gray-300 shadow-sm bg-gray-100">
+                                    <option>Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Textarea</h3>
+                        <div className="max-w-xl">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea 
+                                rows={4} 
+                                placeholder="Enter your message..."
+                                className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                             />
-                            <Checkbox
-                                label="Checked checkbox"
-                                checked={true}
-                                onChange={() => {}}
-                            />
-                            <Checkbox
-                                label="Disabled checkbox"
-                                disabled
-                            />
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Toggle Switch</h3>
+                        <div className="space-y-4">
+                            <label className="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" className="sr-only peer" />
+                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                <span className="ml-3 text-sm font-medium text-gray-700">Toggle off</span>
+                            </label>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" defaultChecked className="sr-only peer" />
+                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                <span className="ml-3 text-sm font-medium text-gray-700">Toggle on</span>
+                            </label>
                         </div>
                     </Card>
                 </div>
@@ -190,18 +257,10 @@ export default function ComponentsIndex() {
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Alert Notifications</h3>
                         <p className="text-sm text-gray-500 mb-4">Click buttons to trigger different alert types</p>
                         <div className="flex flex-wrap gap-3">
-                            <Button onClick={() => addAlert('This is a success message!', 'success')}>
-                                Success Alert
-                            </Button>
-                            <Button variant="danger" onClick={() => addAlert('This is an error message!', 'error')}>
-                                Error Alert
-                            </Button>
-                            <Button variant="secondary" onClick={() => addAlert('This is a warning message!', 'warning')}>
-                                Warning Alert
-                            </Button>
-                            <Button variant="ghost" onClick={() => addAlert('This is an info message!', 'info')}>
-                                Info Alert
-                            </Button>
+                            <Button onClick={() => addAlert('This is a success message!', 'success')}>Success Alert</Button>
+                            <Button variant="danger" onClick={() => addAlert('This is an error message!', 'error')}>Error Alert</Button>
+                            <Button variant="secondary" onClick={() => addAlert('This is a warning message!', 'warning')}>Warning Alert</Button>
+                            <Button variant="ghost" onClick={() => addAlert('This is an info message!', 'info')}>Info Alert</Button>
                         </div>
                     </Card>
 
@@ -242,50 +301,188 @@ export default function ComponentsIndex() {
                             </div>
                         </div>
                     </Card>
-                </div>
-            )}
 
-            {/* Cards Tab */}
-            {activeTab === 3 && (
-                <div className="space-y-6">
                     <Card className="p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Card Variants</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <Card className="p-5">
-                                <h4 className="font-semibold text-gray-900">Basic Card</h4>
-                                <p className="text-sm text-gray-500 mt-2">A simple card with padding and border.</p>
-                            </Card>
-                            <Card className="p-5 bg-primary-50 border-primary-200">
-                                <h4 className="font-semibold text-primary-900">Colored Card</h4>
-                                <p className="text-sm text-primary-700 mt-2">Card with custom background color.</p>
-                            </Card>
-                            <Card className="p-5 shadow-lg">
-                                <h4 className="font-semibold text-gray-900">Elevated Card</h4>
-                                <p className="text-sm text-gray-500 mt-2">Card with larger shadow.</p>
-                            </Card>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Progress Bars</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                    <span className="text-gray-600">Progress</span>
+                                    <span className="text-gray-900 font-medium">25%</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="bg-primary-600 h-2 rounded-full" style={{width: '25%'}}></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                    <span className="text-gray-600">Progress</span>
+                                    <span className="text-gray-900 font-medium">50%</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="bg-green-600 h-2 rounded-full" style={{width: '50%'}}></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                    <span className="text-gray-600">Progress</span>
+                                    <span className="text-gray-900 font-medium">75%</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="bg-yellow-500 h-2 rounded-full" style={{width: '75%'}}></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                    <span className="text-gray-600">Completed</span>
+                                    <span className="text-gray-900 font-medium">100%</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="bg-blue-600 h-2 rounded-full" style={{width: '100%'}}></div>
+                                </div>
+                            </div>
                         </div>
                     </Card>
 
                     <Card className="p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Card with Header</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Card>
-                                <div className="px-5 py-4 border-b border-gray-200">
-                                    <h4 className="font-semibold text-gray-900">Card Title</h4>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Loading Spinners</h3>
+                        <div className="flex flex-wrap items-center gap-6">
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600"></div>
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600"></div>
+                            <div className="flex items-center gap-2">
+                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-600"></div>
+                                <span className="text-sm text-gray-600">Loading...</span>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Skeleton Loading</h3>
+                        <div className="space-y-4">
+                            <div className="animate-pulse flex items-center gap-4">
+                                <div className="rounded-full bg-gray-200 h-12 w-12"></div>
+                                <div className="flex-1 space-y-2">
+                                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                                 </div>
-                                <div className="p-5">
-                                    <p className="text-sm text-gray-500">Card content goes here.</p>
+                            </div>
+                            <div className="animate-pulse space-y-3">
+                                <div className="h-4 bg-gray-200 rounded"></div>
+                                <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                                <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+            )}
+
+            {/* Data Display Tab */}
+            {activeTab === 3 && (
+                <div className="space-y-6">
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Badges</h3>
+                        <div className="flex flex-wrap gap-3">
+                            <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">Default</span>
+                            <span className="inline-flex items-center rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800">Primary</span>
+                            <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Success</span>
+                            <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">Danger</span>
+                            <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Warning</span>
+                            <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">Info</span>
+                            <span className="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800">Purple</span>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Avatars</h3>
+                        <div className="flex flex-wrap items-end gap-4">
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span className="text-xs font-medium text-primary-700">XS</span>
                                 </div>
-                            </Card>
-                            <Card>
-                                <div className="px-5 py-4 border-b border-gray-200 flex justify-between items-center">
-                                    <h4 className="font-semibold text-gray-900">With Action</h4>
-                                    <Button size="sm">Action</Button>
+                                <span className="text-xs text-gray-500">xs</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span className="text-sm font-medium text-primary-700">SM</span>
                                 </div>
-                                <div className="p-5">
-                                    <p className="text-sm text-gray-500">Card with action button in header.</p>
+                                <span className="text-xs text-gray-500">sm</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span className="text-base font-medium text-primary-700">MD</span>
                                 </div>
-                            </Card>
+                                <span className="text-xs text-gray-500">md</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="h-16 w-16 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span className="text-lg font-medium text-primary-700">LG</span>
+                                </div>
+                                <span className="text-xs text-gray-500">lg</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="h-20 w-20 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span className="text-xl font-medium text-primary-700">XL</span>
+                                </div>
+                                <span className="text-xs text-gray-500">xl</span>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Avatar Groups</h3>
+                        <div className="flex -space-x-2">
+                            <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center border-2 border-white">
+                                <span className="text-sm font-medium text-red-700">A</span>
+                            </div>
+                            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center border-2 border-white">
+                                <span className="text-sm font-medium text-blue-700">B</span>
+                            </div>
+                            <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center border-2 border-white">
+                                <span className="text-sm font-medium text-green-700">C</span>
+                            </div>
+                            <div className="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center border-2 border-white">
+                                <span className="text-sm font-medium text-yellow-700">D</span>
+                            </div>
+                            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center border-2 border-white">
+                                <span className="text-sm font-medium text-gray-700">+3</span>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Table</h3>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    <tr className="hover:bg-gray-50">
+                                        <td className="px-4 py-3 text-sm text-gray-900">John Doe</td>
+                                        <td className="px-4 py-3 text-sm text-gray-500">john@example.com</td>
+                                        <td className="px-4 py-3"><span className="inline-flex rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">Admin</span></td>
+                                        <td className="px-4 py-3"><span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Active</span></td>
+                                    </tr>
+                                    <tr className="hover:bg-gray-50">
+                                        <td className="px-4 py-3 text-sm text-gray-900">Jane Smith</td>
+                                        <td className="px-4 py-3 text-sm text-gray-500">jane@example.com</td>
+                                        <td className="px-4 py-3"><span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Member</span></td>
+                                        <td className="px-4 py-3"><span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Active</span></td>
+                                    </tr>
+                                    <tr className="hover:bg-gray-50">
+                                        <td className="px-4 py-3 text-sm text-gray-900">Bob Wilson</td>
+                                        <td className="px-4 py-3 text-sm text-gray-500">bob@example.com</td>
+                                        <td className="px-4 py-3"><span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Member</span></td>
+                                        <td className="px-4 py-3"><span className="inline-flex rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">Inactive</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </Card>
 
@@ -335,7 +532,7 @@ export default function ComponentsIndex() {
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-purple-100 rounded-lg">
                                         <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
                                         </svg>
                                     </div>
                                     <div>
@@ -344,6 +541,231 @@ export default function ComponentsIndex() {
                                     </div>
                                 </div>
                             </Card>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">List</h3>
+                        <ul className="divide-y divide-gray-200">
+                            <li className="py-3 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                        <span className="text-sm font-medium text-blue-700">JD</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-900">John Doe</p>
+                                        <p className="text-xs text-gray-500">john@example.com</p>
+                                    </div>
+                                </div>
+                                <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Active</span>
+                            </li>
+                            <li className="py-3 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+                                        <span className="text-sm font-medium text-purple-700">JS</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-900">Jane Smith</p>
+                                        <p className="text-xs text-gray-500">jane@example.com</p>
+                                    </div>
+                                </div>
+                                <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Active</span>
+                            </li>
+                            <li className="py-3 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
+                                        <span className="text-sm font-medium text-gray-700">BW</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-900">Bob Wilson</p>
+                                        <p className="text-xs text-gray-500">bob@example.com</p>
+                                    </div>
+                                </div>
+                                <span className="inline-flex rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">Inactive</span>
+                            </li>
+                        </ul>
+                    </Card>
+                </div>
+            )}
+
+            {/* Navigation Tab */}
+            {activeTab === 4 && (
+                <div className="space-y-6">
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Breadcrumbs</h3>
+                        <nav className="flex" aria-label="Breadcrumb">
+                            <ol className="inline-flex items-center space-x-1 md:space-x-2">
+                                <li className="inline-flex items-center">
+                                    <a href="#" className="text-sm text-gray-500 hover:text-primary-600">Home</a>
+                                </li>
+                                <li className="flex items-center">
+                                    <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    <a href="#" className="ml-1 text-sm text-gray-500 hover:text-primary-600 md:ml-2">Products</a>
+                                </li>
+                                <li className="flex items-center">
+                                    <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    <span className="ml-1 text-sm font-medium text-gray-900 md:ml-2">Details</span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Tabs</h3>
+                        <div className="border-b border-gray-200">
+                            <nav className="-mb-px flex space-x-8">
+                                <a href="#" className="border-b-2 border-primary-500 py-2 px-1 text-sm font-medium text-primary-600">Profile</a>
+                                <a href="#" className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Settings</a>
+                                <a href="#" className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Notifications</a>
+                            </nav>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Pills Tabs</h3>
+                        <div className="flex flex-wrap gap-2">
+                            <button className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg">Active</button>
+                            <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200">Tab 2</button>
+                            <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200">Tab 3</button>
+                            <button className="px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed" disabled>Disabled</button>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Pagination</h3>
+                        <nav className="flex items-center justify-between">
+                            <p className="text-sm text-gray-500">Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of <span className="font-medium">100</span> results</p>
+                            <div className="flex gap-1">
+                                <button className="px-3 py-1.5 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50" disabled>Previous</button>
+                                <button className="px-3 py-1.5 text-sm font-medium text-white bg-primary-600 border border-primary-600 rounded-lg">1</button>
+                                <button className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">2</button>
+                                <button className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">3</button>
+                                <button className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Next</button>
+                            </div>
+                        </nav>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Steps</h3>
+                        <ol className="flex items-center w-full">
+                            <li className="flex items-center text-primary-600 after:content-[''] after:w-full after:h-1 after:border-b after:border-primary-200 after:border-4 after:inline-block">
+                                <span className="flex items-center justify-center w-10 h-10 bg-primary-100 rounded-full shrink-0">
+                                    <svg className="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                </span>
+                            </li>
+                            <li className="flex items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-4 after:inline-block">
+                                <span className="flex items-center justify-center w-10 h-10 bg-primary-600 rounded-full shrink-0 text-white font-medium">2</span>
+                            </li>
+                            <li className="flex items-center">
+                                <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full shrink-0 text-gray-500 font-medium">3</span>
+                            </li>
+                        </ol>
+                    </Card>
+                </div>
+            )}
+
+            {/* Overlays Tab */}
+            {activeTab === 5 && (
+                <div className="space-y-6">
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Modal</h3>
+                        <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
+                        
+                        {modalOpen && (
+                            <div className="fixed inset-0 z-50 overflow-y-auto">
+                                <div className="flex min-h-full items-center justify-center p-4">
+                                    <div className="fixed inset-0 bg-black/50" onClick={() => setModalOpen(false)}></div>
+                                    <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Modal Title</h3>
+                                        <p className="text-sm text-gray-500 mb-4">This is a simple modal dialog. You can put any content here.</p>
+                                        <div className="flex justify-end gap-3">
+                                            <Button variant="secondary" onClick={() => setModalOpen(false)}>Cancel</Button>
+                                            <Button onClick={() => setModalOpen(false)}>Confirm</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Dropdown</h3>
+                        <div className="relative inline-block">
+                            <Button onClick={() => setDropdownOpen(!dropdownOpen)}>
+                                Dropdown
+                                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </Button>
+                            
+                            {dropdownOpen && (
+                                <>
+                                    <div className="fixed inset-0" onClick={() => setDropdownOpen(false)}></div>
+                                    <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10">
+                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Duplicate</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Archive</a>
+                                        <hr className="my-1" />
+                                        <a href="#" className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</a>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Tooltip</h3>
+                        <div className="flex flex-wrap gap-4">
+                            <div className="relative group">
+                                <Button variant="secondary">Hover me</Button>
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                    Tooltip text
+                                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Card Variants</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <Card className="p-5">
+                                <h4 className="font-semibold text-gray-900">Basic Card</h4>
+                                <p className="text-sm text-gray-500 mt-2">A simple card with padding and border.</p>
+                            </Card>
+                            <Card className="p-5 bg-primary-50 border-primary-200">
+                                <h4 className="font-semibold text-primary-900">Colored Card</h4>
+                                <p className="text-sm text-primary-700 mt-2">Card with custom background color.</p>
+                            </Card>
+                            <Card className="p-5 shadow-lg">
+                                <h4 className="font-semibold text-gray-900">Elevated Card</h4>
+                                <p className="text-sm text-gray-500 mt-2">Card with larger shadow.</p>
+                            </Card>
+                        </div>
+                    </Card>
+
+                    <Card className="p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Empty States</h3>
+                        <div className="text-center py-12">
+                            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" strokeWidth="1" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                            </svg>
+                            <h3 className="mt-2 text-sm font-semibold text-gray-900">No items</h3>
+                            <p className="mt-1 text-sm text-gray-500">Get started by creating a new item.</p>
+                            <div className="mt-6">
+                                <Button>
+                                    <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                    New Item
+                                </Button>
+                            </div>
                         </div>
                     </Card>
                 </div>

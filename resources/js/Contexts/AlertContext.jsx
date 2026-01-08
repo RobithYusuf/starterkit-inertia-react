@@ -17,6 +17,10 @@ export function AlertProvider({ children }) {
         }
         return id;
     }, [idCounter]);
+
+    const addAlert = useCallback((message, type = 'info', duration = 5000) => {
+        return add(type, message, duration);
+    }, [add]);
     
     const remove = useCallback((id) => {
         setAlerts(prev => prev.filter(a => a.id !== id));
@@ -32,7 +36,7 @@ export function AlertProvider({ children }) {
     const info = useCallback((msg, duration) => add('info', msg, duration), [add]);
     
     return (
-        <AlertContext.Provider value={{ alerts, add, remove, clear, success, error, warning, info }}>
+        <AlertContext.Provider value={{ alerts, add, addAlert, remove, removeAlert: remove, clear, success, error, warning, info }}>
             {children}
         </AlertContext.Provider>
     );

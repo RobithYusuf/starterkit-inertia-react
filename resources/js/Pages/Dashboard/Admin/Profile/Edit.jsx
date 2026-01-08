@@ -1,5 +1,6 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
 import DashboardLayout from '@/Components/Layouts/DashboardLayout';
+import PageHeader from '@/Components/Dashboard/PageHeader';
 import Card from '@/Components/UI/Card';
 import Button from '@/Components/UI/Button';
 import TextInput from '@/Components/UI/Form/TextInput';
@@ -8,6 +9,11 @@ import PasswordInput from '@/Components/UI/Form/PasswordInput';
 export default function ProfileEdit({ user }) {
     const { auth } = usePage().props;
     const currentUser = user || auth?.user;
+
+    const breadcrumbs = [
+        { label: 'Dashboard', href: '/admin/dashboard' },
+        { label: 'Profile' },
+    ];
 
     const profileForm = useForm({
         name: currentUser?.name || '',
@@ -33,17 +39,21 @@ export default function ProfileEdit({ user }) {
     };
 
     return (
-        <DashboardLayout title="Profile">
+        <DashboardLayout>
             <Head title="Profile" />
+
+            <PageHeader 
+                title="Profile" 
+                description="Update your account information"
+                breadcrumbs={breadcrumbs}
+            />
 
             <div className="max-w-2xl space-y-6">
                 {/* Profile Information */}
-                <Card>
-                    <div className="border-b border-gray-200 px-6 py-4">
-                        <h2 className="text-lg font-semibold text-gray-900">Profile Information</h2>
-                        <p className="text-sm text-gray-500">Update your account information</p>
-                    </div>
-                    <form onSubmit={handleProfileSubmit} className="p-6 space-y-6">
+                <Card className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Profile Information</h3>
+                    <p className="text-sm text-gray-500 mb-4">Update your name and email address</p>
+                    <form onSubmit={handleProfileSubmit} className="space-y-4">
                         <TextInput
                             label="Name"
                             value={profileForm.data.name}
@@ -66,12 +76,10 @@ export default function ProfileEdit({ user }) {
                 </Card>
 
                 {/* Change Password */}
-                <Card>
-                    <div className="border-b border-gray-200 px-6 py-4">
-                        <h2 className="text-lg font-semibold text-gray-900">Change Password</h2>
-                        <p className="text-sm text-gray-500">Ensure your account uses a secure password</p>
-                    </div>
-                    <form onSubmit={handlePasswordSubmit} className="p-6 space-y-6">
+                <Card className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Change Password</h3>
+                    <p className="text-sm text-gray-500 mb-4">Ensure your account uses a secure password</p>
+                    <form onSubmit={handlePasswordSubmit} className="space-y-4">
                         <PasswordInput
                             label="Current Password"
                             value={passwordForm.data.current_password}
