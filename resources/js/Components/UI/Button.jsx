@@ -1,6 +1,8 @@
-import { forwardRef } from 'react';
-
-const Button = forwardRef(function Button({
+/**
+ * Button Component
+ * React 19 compatible - uses ref as prop
+ */
+export default function Button({
     type = 'button',
     variant = 'primary',
     size = 'md',
@@ -8,8 +10,9 @@ const Button = forwardRef(function Button({
     disabled = false,
     className = '',
     children,
+    ref, // React 19: ref as prop
     ...props
-}, ref) {
+}) {
     const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variants = {
@@ -21,11 +24,11 @@ const Button = forwardRef(function Button({
     };
 
     const sizes = {
-        xs: 'px-2.5 py-1.5 text-xs gap-1',
-        sm: 'px-3 py-2 text-sm gap-1.5',
-        md: 'px-4 py-2.5 text-sm gap-2',
-        lg: 'px-6 py-3 text-base gap-2',
-        xl: 'px-8 py-4 text-lg gap-2.5',
+        xs: 'px-2.5 h-7 text-xs gap-1',
+        sm: 'px-3 h-9 text-sm gap-1.5',
+        md: 'px-4 h-[42px] text-sm gap-2',
+        lg: 'px-6 h-12 text-base gap-2',
+        xl: 'px-8 h-14 text-lg gap-2.5',
     };
 
     const classes = `${baseClasses} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`;
@@ -51,6 +54,4 @@ const Button = forwardRef(function Button({
             )}
         </button>
     );
-});
-
-export default Button;
+}

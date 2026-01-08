@@ -20,28 +20,29 @@ export default function ForgotPassword({ status }) {
             <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-gray-900">Forgot Password</h2>
                 <p className="text-gray-600 mt-2">
-                    Enter your email address and we'll send you a password reset link.
+                    Enter your email and we'll send you a reset link.
                 </p>
             </div>
 
             {status && (
-                <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
                     {status}
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
                 <TextInput
-                    label="Email"
+                    label="Email Address"
                     type="email"
                     value={data.email}
                     onChange={(e) => setData('email', e.target.value)}
                     error={errors.email}
+                    placeholder="you@example.com"
                     required
                     autoFocus
                 />
 
-                <Button type="submit" className="w-full" loading={processing}>
+                <Button type="submit" className="w-full" size="lg" loading={processing}>
                     Send Reset Link
                 </Button>
 

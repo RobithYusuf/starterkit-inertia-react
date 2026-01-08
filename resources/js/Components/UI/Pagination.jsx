@@ -1,5 +1,21 @@
 import { Link } from '@inertiajs/react';
 
+/**
+ * Sanitize pagination label - strip HTML tags for security
+ * Laravel pagination uses HTML entities like &laquo; and &raquo;
+ */
+function sanitizeLabel(label) {
+    if (!label) return '';
+    // Decode common HTML entities and strip any remaining HTML
+    return label
+        .replace(/&laquo;/g, '«')
+        .replace(/&raquo;/g, '»')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/<[^>]*>/g, ''); // Strip any HTML tags
+}
+
 export default function Pagination({ links, from, to, total, className = '' }) {
     if (!links || links.length <= 3) return null;
 
@@ -15,17 +31,19 @@ export default function Pagination({ links, from, to, total, className = '' }) {
                     const isFirst = index === 0;
                     const isLast = index === links.length - 1;
                     const isPrevNext = isFirst || isLast;
+                    const label = sanitizeLabel(link.label);
                     
                     // Disabled state (no URL and not active)
                     if (!link.url && !link.active) {
                         return (
                             <span
-                                key={index}
+                                key={`page-${index}-${label}`}
                                 className={`px-3 py-1.5 text-sm rounded-lg text-gray-400 bg-gray-50 border border-gray-200 cursor-not-allowed ${
                                     isPrevNext ? 'hidden sm:inline-flex' : ''
                                 }`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
+                            >
+                                {label}
+                            </span>
                         );
                     }
 
@@ -33,23 +51,25 @@ export default function Pagination({ links, from, to, total, className = '' }) {
                     if (link.active) {
                         return (
                             <span
-                                key={index}
+                                key={`page-${index}-${label}`}
                                 className="px-3 py-1.5 text-sm font-medium rounded-lg bg-primary-600 text-white border border-primary-600"
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
+                            >
+                                {label}
+                            </span>
                         );
                     }
 
                     // Normal clickable state
                     return (
                         <Link
-                            key={index}
+                            key={`page-${index}-${label}`}
                             href={link.url}
                             className={`px-3 py-1.5 text-sm font-medium rounded-lg text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-colors ${
                                 isPrevNext ? 'hidden sm:inline-flex' : ''
                             }`}
-                            dangerouslySetInnerHTML={{ __html: link.label }}
-                        />
+                        >
+                            {label}
+                        </Link>
                     );
                 })}
             </nav>

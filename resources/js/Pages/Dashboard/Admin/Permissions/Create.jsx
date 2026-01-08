@@ -3,6 +3,7 @@ import DashboardLayout from '@/Components/Layouts/DashboardLayout';
 import Card from '@/Components/UI/Card';
 import Button from '@/Components/UI/Button';
 import TextInput from '@/Components/UI/Form/TextInput';
+import Checkbox from '@/Components/UI/Form/Checkbox';
 
 export default function PermissionsCreate({ groups, roles }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -71,15 +72,12 @@ export default function PermissionsCreate({ groups, roles }) {
                             </p>
                             <div className="space-y-2">
                                 {roles?.filter(r => r !== 'super-admin').map((role) => (
-                                    <label key={role} className="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            checked={data.roles.includes(role)}
-                                            onChange={() => toggleRole(role)}
-                                            className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                                        />
-                                        <span className="ml-2 text-sm text-gray-700">{role}</span>
-                                    </label>
+                                    <Checkbox
+                                        key={role}
+                                        label={role}
+                                        checked={data.roles.includes(role)}
+                                        onChange={() => toggleRole(role)}
+                                    />
                                 ))}
                             </div>
                         </div>

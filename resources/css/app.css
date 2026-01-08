@@ -14,6 +14,93 @@
     --color-primary-800: var(--theme-primary-800);
     --color-primary-900: var(--theme-primary-900);
     --color-accent: var(--theme-accent);
+
+    /* Custom Animations for UI Components */
+    --animate-fade-in: fade-in 0.2s ease-out;
+    --animate-fade-out: fade-out 0.2s ease-out;
+    --animate-scale-in: scale-in 0.2s ease-out;
+    --animate-scale-out: scale-out 0.15s ease-in;
+    --animate-slide-in-up: slide-in-up 0.3s ease-out;
+    --animate-slide-in-down: slide-in-down 0.3s ease-out;
+    --animate-slide-in-left: slide-in-left 0.3s ease-out;
+    --animate-slide-in-right: slide-in-right 0.3s ease-out;
+
+    /* Keyframes for animations */
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fade-out {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    @keyframes scale-in {
+        from { 
+            opacity: 0; 
+            transform: scale(0.95); 
+        }
+        to { 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+    }
+
+    @keyframes scale-out {
+        from { 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+        to { 
+            opacity: 0; 
+            transform: scale(0.95); 
+        }
+    }
+
+    @keyframes slide-in-up {
+        from { 
+            opacity: 0; 
+            transform: translateY(10px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
+
+    @keyframes slide-in-down {
+        from { 
+            opacity: 0; 
+            transform: translateY(-10px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
+
+    @keyframes slide-in-left {
+        from { 
+            opacity: 0; 
+            transform: translateX(-10px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+    }
+
+    @keyframes slide-in-right {
+        from { 
+            opacity: 0; 
+            transform: translateX(10px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+    }
 }
 
 @layer base {
@@ -272,7 +359,8 @@ body.page-transitioning main {
     }
 }
 
-/* Form input styles */
+/* Form input base styles - only non-layout properties */
+/* Padding is handled by individual components to support icons */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -282,7 +370,7 @@ input[type="url"],
 input[type="search"],
 textarea,
 select {
-    @apply w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder-gray-400 
+    @apply w-full rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 
            focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 
            disabled:bg-gray-100 disabled:cursor-not-allowed
            transition-colors duration-200;

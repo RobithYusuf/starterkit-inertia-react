@@ -2,29 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import DashboardLayout from '@/Components/Layouts/DashboardLayout';
 import PageHeader from '@/Components/Dashboard/PageHeader';
 import Card from '@/Components/UI/Card';
-
-function StatCard({ title, value, icon: Icon, color = 'primary' }) {
-    const colorClasses = {
-        primary: 'bg-primary-50 text-primary-600',
-        blue: 'bg-blue-50 text-blue-600',
-        green: 'bg-green-50 text-green-600',
-        yellow: 'bg-yellow-50 text-yellow-600',
-    };
-
-    return (
-        <Card className="p-6">
-            <div className="flex items-center gap-4">
-                <div className={`rounded-lg p-3 ${colorClasses[color]}`}>
-                    <Icon className="h-6 w-6" />
-                </div>
-                <div>
-                    <p className="text-sm font-medium text-gray-500">{title}</p>
-                    <p className="text-2xl font-bold text-gray-900">{value}</p>
-                </div>
-            </div>
-        </Card>
-    );
-}
+import StatCard, { StatCardGroup } from '@/Components/UI/StatCard';
 
 function UsersIcon(props) {
     return (
@@ -74,32 +52,32 @@ export default function AdminDashboard({ stats, recentUsers }) {
             />
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+            <StatCardGroup columns={4} className="mb-8">
                 <StatCard 
                     title="Total Users" 
                     value={stats?.total_users || 0} 
-                    icon={UsersIcon}
+                    icon={<UsersIcon className="w-6 h-6" />}
                     color="primary"
                 />
                 <StatCard 
                     title="Admins" 
                     value={stats?.total_admins || 0} 
-                    icon={ShieldIcon}
-                    color="blue"
+                    icon={<ShieldIcon className="w-6 h-6" />}
+                    color="info"
                 />
                 <StatCard 
                     title="Members" 
                     value={stats?.total_members || 0} 
-                    icon={UserIcon}
-                    color="green"
+                    icon={<UserIcon className="w-6 h-6" />}
+                    color="success"
                 />
                 <StatCard 
                     title="Active Users" 
                     value={stats?.active_users || 0} 
-                    icon={CheckIcon}
-                    color="yellow"
+                    icon={<CheckIcon className="w-6 h-6" />}
+                    color="warning"
                 />
-            </div>
+            </StatCardGroup>
 
             {/* Recent Users */}
             <Card>

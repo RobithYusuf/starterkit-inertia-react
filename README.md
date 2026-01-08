@@ -1,59 +1,454 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Laravel Inertia React Starter Kit
+
+Modern starter kit for building web applications with **Laravel 12**, **Inertia.js v2**, and **React 19**. Includes authentication, Spatie Permission, user management, and comprehensive component library.
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
+  <img src="https://img.shields.io/badge/Inertia.js-2.x-6B46C1?style=for-the-badge&logo=inertia&logoColor=white" alt="Inertia">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/Spatie_Permission-6.x-2196F3?style=for-the-badge" alt="Spatie Permission">
 </p>
 
-## About Laravel
+## 📋 Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Features](#-features)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Configuration](#%EF%B8%8F-configuration)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Components](#-components)
+- [Customization](#-customization)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🔐 Authentication & Authorization
+- Login, Register, Forgot Password, Reset Password
+- Email verification (optional)
+- **Spatie Laravel Permission** for roles & permissions
+- 3 default roles: Super Admin, Admin, Member
+- 17 granular permissions
+- Permission Matrix UI for managing permissions
+- Protected routes with middleware
 
-## Learning Laravel
+### 👥 User Management
+- CRUD users with DataTable
+- Assign roles to users
+- Search, sort, and pagination
+- User avatar with initial generator
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🔒 Session Management
+- View all active sessions
+- Revoke sessions from other devices
+- Device, IP, and last activity information
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🎨 UI/UX Features
+- **5 Theme Colors**: Orange (default), Blue, Emerald, Purple, Slate
+- **Customizable Alert Position**: 6 positions (top/bottom, left/center/right)
+- **Responsive Design**: Mobile-first approach
+- **Toast Notifications**: Success, error, info, warning alerts
+- **Loading States**: Skeleton loader & spinner
+- **Empty States**: Informative placeholder
+- **Dark Mode Support**: Toggle between light and dark themes
 
-## Laravel Sponsors
+### 🛠️ Developer Experience
+- **React 19**: Latest React with concurrent features
+- **Hot Module Replacement**: Instant preview
+- **Component Library**: 40+ reusable components
+- **React Context**: Global state management with contexts
+- **Form Handling**: Integrated with Inertia
+- **Validation**: Client & server-side
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📦 Requirements
 
-### Premium Partners
+Make sure your system meets the following requirements:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **PHP** >= 8.2
+- **Composer** >= 2.7
+- **Node.js** >= 20.0
+- **NPM** >= 10.0 or Yarn
+- **MySQL** >= 8.0 or PostgreSQL >= 15
 
-## Contributing
+## 🔧 Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Clone Repository
 
-## Code of Conduct
+```bash
+# Clone repository
+git clone https://github.com/your-username/starter-kit-inertia-react.git my-app
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Enter directory
+cd my-app
+```
 
-## Security Vulnerabilities
+### 2. Install Dependencies
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# Install PHP dependencies
+composer install
 
-## License
+# Install Node dependencies
+npm install
+# or using yarn
+yarn install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 3. Environment Setup
+
+```bash
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+```
+
+### 4. Configure Database
+
+Edit `.env` file and configure your database:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### 5. Run Migrations & Seeders
+
+```bash
+# Create database tables
+php artisan migrate
+
+# Seed dummy data (optional)
+php artisan db:seed
+```
+
+Seeder will create:
+- Super Admin: `superadmin@example.com` / `password`
+- Admin: `admin@example.com` / `password`
+- Member: `member@example.com` / `password`
+- 50 dummy users with member role
+
+### 6. Build Assets
+
+```bash
+# Development mode with HMR
+npm run dev
+
+# Production build
+npm run build
+```
+
+### 7. Start Development Server
+
+```bash
+# Terminal 1: Laravel server
+php artisan serve
+
+# Terminal 2: Vite dev server (if not already running)
+npm run dev
+```
+
+Application accessible at: `http://localhost:8000`
+
+## ⚙️ Configuration
+
+### Email Configuration
+
+For email features (reset password, verification), configure in `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@yourapp.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### Storage Link
+
+For file/image uploads:
+
+```bash
+php artisan storage:link
+```
+
+### Queue Configuration (Optional)
+
+For background jobs:
+
+```env
+QUEUE_CONNECTION=database
+```
+
+```bash
+php artisan queue:table
+php artisan migrate
+php artisan queue:work
+```
+
+## 💻 Usage
+
+### Default Users
+
+After running seeder, use the following accounts:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | superadmin@example.com | password |
+| Admin | admin@example.com | password |
+| Member | member@example.com | password |
+
+### Roles & Permissions
+
+This project uses [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission):
+
+| Role | Permissions | Dashboard |
+|------|-------------|-----------|
+| `super-admin` | All permissions | `/admin/dashboard` |
+| `admin` | User CRUD, Settings, Components | `/admin/dashboard` |
+| `member` | Profile, Sessions | `/dashboard` |
+
+**Available Permissions:**
+- `user.view`, `user.create`, `user.edit`, `user.delete`
+- `role.view`, `role.create`, `role.edit`, `role.delete`
+- `settings.view`, `settings.edit`
+- `dashboard.admin`, `dashboard.member`
+- `profile.view`, `profile.edit`
+- `sessions.view`, `sessions.revoke`
+- `components.view`
+
+### Route Structure
+
+```php
+// Public routes
+Route::get('/', ...);
+Route::get('/login', ...);
+Route::get('/register', ...);
+
+// Admin routes (super-admin & admin)
+Route::middleware(['auth', 'role:super-admin,admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::get('/settings', ...);
+    Route::get('/components', ...);
+});
+
+// Member routes
+Route::middleware(['auth', 'role:member'])->group(function () {
+    Route::get('/dashboard', ...);
+    Route::get('/profile', ...);
+    Route::get('/sessions', ...);
+});
+```
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   └── Middleware/
+│   └── Models/
+├── resources/
+│   ├── js/
+│   │   ├── Components/        # Reusable React components
+│   │   │   ├── Dashboard/     # Dashboard-specific components
+│   │   │   ├── Layouts/       # Page layouts
+│   │   │   ├── Shared/        # Shared components
+│   │   │   └── UI/            # UI component library
+│   │   │       └── Form/      # Form components
+│   │   ├── Contexts/          # React contexts for state
+│   │   ├── Hooks/             # Custom React hooks
+│   │   ├── Pages/             # React pages
+│   │   │   ├── Auth/          # Authentication pages
+│   │   │   └── Dashboard/     # Dashboard pages
+│   │   ├── Utils/             # Utility functions
+│   │   └── app.jsx            # Main entry point
+│   └── css/
+│       └── app.css            # Tailwind CSS
+├── routes/
+│   └── web.php                # Application routes
+├── database/
+│   ├── migrations/
+│   └── seeders/
+└── tests/
+```
+
+## 🧩 Components
+
+Starter kit provides 40+ ready-to-use components with React 19:
+
+### UI Components
+| Component | Description |
+|-----------|-------------|
+| `Button` | Button with variants (primary, secondary, danger, ghost, link) |
+| `Card` | Container with shadow and padding |
+| `Modal` | Dialog/popup with portal rendering |
+| `ConfirmModal` | Confirmation modal with callback |
+| `Alert` | Inline notification |
+| `AlertContainer` | Toast notifications with 6 positions |
+| `Badge` | Label/tag with colors |
+| `Avatar` | User avatar with fallback initials |
+| `Tabs` | Tab navigation |
+| `Accordion` | Collapsible content |
+| `Tooltip` | Hover tooltips |
+| `Progress` | Progress bar |
+| `Spinner` | Loading indicator |
+| `Skeleton` | Loading placeholder |
+| `Pagination` | Page navigation |
+| `Breadcrumb` | Navigation breadcrumbs |
+| `Dropdown` | Dropdown menu |
+| `EmptyState` | Empty state placeholder |
+| `StatCard` | Statistics card with icon |
+| `Toggle` | Toggle switch |
+
+### Form Components
+| Component | Description |
+|-----------|-------------|
+| `TextInput` | Text input with label and error |
+| `PasswordInput` | Password with visibility toggle |
+| `Select` | Custom select dropdown |
+| `MultiSelect` | Multi-value select with tags |
+| `Textarea` | Multi-line text input |
+| `Checkbox` | Custom checkbox |
+| `RadioOption` | Radio button options |
+| `DatePicker` | Calendar date picker |
+| `FileUpload` | Drag & drop file upload |
+| `TagInput` | Tag/chip input |
+
+View all components at `/admin/components` after login.
+
+## 🎨 Customization
+
+### Changing Theme
+
+1. Via UI:
+   - Login as admin
+   - Go to Settings
+   - Select desired theme
+
+2. Adding new theme:
+```jsx
+// resources/js/Contexts/ThemeContext.jsx
+const presetThemes = {
+    indigo: {
+        name: 'Indigo Night',
+        primary600: '#4f46e5',
+    },
+    // ... add more themes
+};
+```
+
+3. Update CSS variables:
+```css
+/* resources/css/app.css */
+[data-theme='indigo'] {
+    --theme-primary-50: #eef2ff;
+    --theme-primary-100: #e0e7ff;
+    /* ... other color shades */
+}
+```
+
+### Adding Role & Permission
+
+```php
+// database/seeders/RolePermissionSeeder.php
+
+// Add new permissions
+$permissions = [
+    // ... existing
+    'report.view',
+    'report.export',
+];
+
+// Create new role
+$editor = Role::create(['name' => 'editor']);
+$editor->givePermissionTo(['report.view', 'report.export']);
+
+// Run: php artisan db:seed --class=RolePermissionSeeder
+```
+
+### Using Permissions in React
+
+```jsx
+import { usePage } from '@inertiajs/react';
+
+function MyComponent() {
+    const { auth } = usePage().props;
+    const user = auth?.user;
+    
+    const canCreateUser = user?.permissions?.includes('user.create');
+    const isAdmin = user?.roles?.some(r => ['admin', 'super-admin'].includes(r));
+    
+    return (
+        <>
+            {canCreateUser && (
+                <Button>Create User</Button>
+            )}
+        </>
+    );
+}
+```
+
+### Creating Custom Hooks
+
+```jsx
+// resources/js/Hooks/usePermission.js
+import { usePage } from '@inertiajs/react';
+
+export function usePermission() {
+    const { auth } = usePage().props;
+    const user = auth?.user;
+    
+    const can = (permission) => {
+        return user?.permissions?.includes(permission) ?? false;
+    };
+    
+    const hasRole = (role) => {
+        return user?.roles?.includes(role) ?? false;
+    };
+    
+    return { can, hasRole, user };
+}
+```
+
+## 📚 Resources
+
+- [Laravel Documentation](https://laravel.com/docs)
+- [Inertia.js Documentation](https://inertiajs.com)
+- [React Documentation](https://react.dev)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 👨‍💻 Author
+
+Created with ❤️ for the Laravel & React community
+
+---
+
+<p align="center">
+  <strong>Happy Coding! 🎉</strong>
+</p>

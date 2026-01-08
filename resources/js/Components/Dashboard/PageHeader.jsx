@@ -34,7 +34,7 @@ export default function PageHeader({
                                     actions.map((action, index) => (
                                         action.type === 'link' ? (
                                             <Link
-                                                key={index}
+                                                key={action.href || action.label || index}
                                                 href={action.href}
                                                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 transition-all"
                                             >
@@ -43,7 +43,7 @@ export default function PageHeader({
                                             </Link>
                                         ) : (
                                             <button
-                                                key={index}
+                                                key={action.label || index}
                                                 onClick={action.onClick}
                                                 className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-all"
                                             >

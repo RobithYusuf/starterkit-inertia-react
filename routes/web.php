@@ -118,6 +118,9 @@ Route::middleware(['auth', 'role:member'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::delete('/sessions/{session}', [\App\Http\Controllers\SessionController::class, 'destroy'])->name('sessions.destroy');
     Route::delete('/sessions', [\App\Http\Controllers\SessionController::class, 'destroyOthers'])->name('sessions.destroy-others');
+    // Admin prefix routes for session management
+    Route::delete('/admin/sessions/{session}', [\App\Http\Controllers\SessionController::class, 'destroy'])->name('admin.sessions.destroy');
+    Route::delete('/admin/sessions', [\App\Http\Controllers\SessionController::class, 'destroyOthers'])->name('admin.sessions.destroy-others');
 });
 
 // Logout route - available for authenticated users

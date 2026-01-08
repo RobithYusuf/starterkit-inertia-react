@@ -28,13 +28,14 @@ export default function ResetPassword({ token, email }) {
                 </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
                 <TextInput
-                    label="Email"
+                    label="Email Address"
                     type="email"
                     value={data.email}
                     onChange={(e) => setData('email', e.target.value)}
                     error={errors.email}
+                    placeholder="you@example.com"
                     required
                 />
 
@@ -43,6 +44,7 @@ export default function ResetPassword({ token, email }) {
                     value={data.password}
                     onChange={(e) => setData('password', e.target.value)}
                     error={errors.password}
+                    placeholder="Enter new password"
                     required
                 />
 
@@ -51,10 +53,11 @@ export default function ResetPassword({ token, email }) {
                     value={data.password_confirmation}
                     onChange={(e) => setData('password_confirmation', e.target.value)}
                     error={errors.password_confirmation}
+                    placeholder="Confirm new password"
                     required
                 />
 
-                <Button type="submit" className="w-full" loading={processing}>
+                <Button type="submit" className="w-full" size="lg" loading={processing}>
                     Reset Password
                 </Button>
 

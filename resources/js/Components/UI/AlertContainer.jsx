@@ -85,12 +85,22 @@ function Alert({ id, message, type, onClose }) {
 }
 
 export default function AlertContainer() {
-    const { alerts, removeAlert } = useAlert();
+    const { alerts, removeAlert, position } = useAlert();
 
     if (alerts.length === 0) return null;
 
+    // Position classes mapping
+    const positionClasses = {
+        'top-left': 'top-4 left-4',
+        'top-center': 'top-4 left-1/2 -translate-x-1/2',
+        'top-right': 'top-4 right-4',
+        'bottom-left': 'bottom-4 left-4',
+        'bottom-center': 'bottom-4 left-1/2 -translate-x-1/2',
+        'bottom-right': 'bottom-4 right-4',
+    };
+
     return (
-        <div className="fixed top-4 right-4 z-[100] flex flex-col gap-3">
+        <div className={`fixed z-[100] flex flex-col gap-3 ${positionClasses[position] || positionClasses['top-right']}`}>
             {alerts.map((alert) => (
                 <Alert
                     key={alert.id}

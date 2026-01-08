@@ -120,27 +120,22 @@ class SessionController extends Controller
     }
     
     /**
-     * Delete the given session.
+     * Delete the given session (no password required for single session).
      */
     public function destroy(Request $request, string $sessionId)
     {
-        $request->validate([
-            'password' => ['required', 'string'],
-        ]);
-        
-        if (!Hash::check($request->password, $request->user()->password)) {
-            throw ValidationException::withMessages([
-                'password' => [__('This password does not match our records.')],
-            ]);
-        }
-        
-        DB::connection(config('session.connection'))
+        // Verify the session belongs to the current user before deleting
+        $deleted = DB::connection(config('session.connection'))
             ->table(config('session.table', 'sessions'))
             ->where('id', $sessionId)
             ->where('user_id', $request->user()->getAuthIdentifier())
             ->delete();
         
-        return back()->with('success', 'Session has been logged out.');
+        if ($deleted) {
+            return back()->with('success', 'Session has been logged out.');
+        }
+        
+        return back()->with('error', 'Session not found.');
     }
     
     /**

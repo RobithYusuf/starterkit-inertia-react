@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Head, useForm, Link } from '@inertiajs/react';
 import DashboardLayout from '@/Components/Layouts/DashboardLayout';
 import PageHeader from '@/Components/Dashboard/PageHeader';
@@ -5,8 +6,11 @@ import Card from '@/Components/UI/Card';
 import Button from '@/Components/UI/Button';
 import TextInput from '@/Components/UI/Form/TextInput';
 import PasswordInput from '@/Components/UI/Form/PasswordInput';
+import RadioOption from '@/Components/UI/Form/RadioOption';
 
 export default function UsersCreate({ availableRoles }) {
+    const [showPasswordError, setShowPasswordError] = useState(false);
+
     const breadcrumbs = [
         { label: 'Dashboard', href: '/admin/dashboard' },
         { label: 'Users', href: '/admin/users' },
@@ -22,9 +26,25 @@ export default function UsersCreate({ availableRoles }) {
         is_active: true,
     });
 
+    const checkPasswordMatch = () => {
+        if (data.password && data.password.length > 0) {
+            return data.password !== data.password_confirmation ? 'Passwords do not match' : '';
+        }
+        return '';
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/admin/users');
+        setShowPasswordError(true);
+        const passwordMatchError = checkPasswordMatch();
+
+        if (passwordMatchError) {
+            return;
+        }
+
+        post('/admin/users', {
+            preserveScroll: true,
+        });
     };
 
     return (
@@ -32,7 +52,7 @@ export default function UsersCreate({ availableRoles }) {
             <Head title="Create User" />
 
             <PageHeader 
-                title="Create New User" 
+                title="Create User" 
                 description="Add a new user to the system"
                 breadcrumbs={breadcrumbs}
             >
@@ -41,117 +61,151 @@ export default function UsersCreate({ availableRoles }) {
                         <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                         </svg>
-                        Back to Users
+                        Back
                     </Button>
                 </Link>
             </PageHeader>
 
-            <Card className="p-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* User Information */}
-                    <div>
-                        <h3 className="text-base font-semibold text-gray-900 mb-4">User Information</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card>
+                <div className="p-5">
+                    <form onSubmit={handleSubmit} className="space-y-4 w-full p-0 lg:p-2">
+                        <div className="mb-4">
+                            <h3 className="text-lg font-medium text-gray-800">User Information</h3>
+                            <p className="text-sm text-gray-500 mt-1 mb-2">Fill in the new user details below</p>
+                        </div>
+
+                        {/* Role Selection */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Role <span className="text-red-500">*</span>
+                            </label>
+                            <div className="grid grid-cols-2 gap-2">
+                                <RadioOption
+                                    id="role-admin"
+                                    name="role"
+                                    value="admin"
+                                    checked={data.role === 'admin'}
+                                    onChange={(val) => setData('role', val)}
+                                    title="Administrator"
+                                    description="Full system access"
+                                />
+                                <RadioOption
+                                    id="role-member"
+                                    name="role"
+                                    value="member"
+                                    checked={data.role === 'member'}
+                                    onChange={(val) => setData('role', val)}
+                                    title="Member"
+                                    description="Limited access"
+                                />
+                            </div>
+                            {errors.role && (
+                                <p className="mt-2 text-sm text-red-600">{errors.role}</p>
+                            )}
+                        </div>
+
+                        {/* Name and Email */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <TextInput
-                                label="Name"
+                                label="Full Name"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
                                 error={errors.name}
                                 placeholder="Enter full name"
+                                icon={
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                    </svg>
+                                }
                                 required
                             />
                             <TextInput
-                                label="Email"
+                                label="Email Address"
                                 type="email"
                                 value={data.email}
                                 onChange={(e) => setData('email', e.target.value)}
                                 error={errors.email}
-                                placeholder="Enter email address"
+                                placeholder="name@example.com"
+                                icon={
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                }
                                 required
                             />
                         </div>
-                    </div>
 
-                    <hr className="border-gray-200" />
-
-                    {/* Password */}
-                    <div>
-                        <h3 className="text-base font-semibold text-gray-900 mb-4">Password</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Password Fields */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <PasswordInput
                                 label="Password"
                                 value={data.password}
                                 onChange={(e) => setData('password', e.target.value)}
                                 error={errors.password}
+                                placeholder="Minimum 8 characters"
                                 required
                             />
                             <PasswordInput
                                 label="Confirm Password"
                                 value={data.password_confirmation}
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
-                                error={errors.password_confirmation}
+                                error={errors.password_confirmation || (showPasswordError ? checkPasswordMatch() : '')}
+                                placeholder="Confirm password"
                                 required
                             />
                         </div>
-                    </div>
 
-                    <hr className="border-gray-200" />
-
-                    {/* Role & Status */}
-                    <div>
-                        <h3 className="text-base font-semibold text-gray-900 mb-4">Role & Status</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Role <span className="text-red-500">*</span>
-                                </label>
-                                <select
-                                    value={data.role}
-                                    onChange={(e) => setData('role', e.target.value)}
-                                    className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                                >
-                                    {availableRoles?.map((role) => (
-                                        <option key={role} value={role}>
-                                            {role}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.role && (
-                                    <p className="mt-1 text-sm text-red-600">{errors.role}</p>
-                                )}
+                        {/* Status Selection */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Account Status
+                            </label>
+                            <div className="grid grid-cols-2 gap-2">
+                                <RadioOption
+                                    id="status-active"
+                                    name="is_active"
+                                    value={true}
+                                    checked={data.is_active === true}
+                                    onChange={() => setData('is_active', true)}
+                                    title="Active"
+                                    description="User can access"
+                                    variant="success"
+                                />
+                                <RadioOption
+                                    id="status-inactive"
+                                    name="is_active"
+                                    value={false}
+                                    checked={data.is_active === false}
+                                    onChange={() => setData('is_active', false)}
+                                    title="Inactive"
+                                    description="Access disabled"
+                                    variant="danger"
+                                />
                             </div>
-                            <div className="flex items-center">
-                                <label className="flex items-center cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        checked={data.is_active}
-                                        onChange={(e) => setData('is_active', e.target.checked)}
-                                        className="h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                                    />
-                                    <span className="ml-3">
-                                        <span className="text-sm font-medium text-gray-700">Active</span>
-                                        <span className="block text-xs text-gray-500">User can login to the system</span>
-                                    </span>
-                                </label>
-                            </div>
+                            {errors.is_active && (
+                                <p className="mt-2 text-sm text-red-600">{errors.is_active}</p>
+                            )}
                         </div>
-                    </div>
 
-                    <hr className="border-gray-200" />
-
-                    {/* Actions */}
-                    <div className="flex gap-4">
-                        <Button type="submit" loading={processing}>
-                            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            Create User
-                        </Button>
-                        <Link href="/admin/users">
-                            <Button type="button" variant="secondary">Cancel</Button>
-                        </Link>
-                    </div>
-                </form>
+                        {/* Form Actions */}
+                        <div className="pt-4 mt-2 border-t border-gray-200 flex justify-end gap-3">
+                            <Link href="/admin/users">
+                                <Button type="button" variant="secondary">
+                                    <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    Cancel
+                                </Button>
+                            </Link>
+                            <Button type="submit" loading={processing}>
+                                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                                </svg>
+                                {processing ? 'Saving...' : 'Save'}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </Card>
         </DashboardLayout>
     );

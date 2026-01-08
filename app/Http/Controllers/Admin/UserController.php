@@ -30,9 +30,13 @@ class UserController extends Controller
             });
         }
         
-        // Filter by status
-        if ($request->has('is_active')) {
-            $query->where('is_active', $request->boolean('is_active'));
+        // Filter by status (active/inactive)
+        if ($status = $request->get('status')) {
+            if ($status === 'active') {
+                $query->where('is_active', true);
+            } elseif ($status === 'inactive') {
+                $query->where('is_active', false);
+            }
         }
         
         // Sorting
@@ -59,13 +63,10 @@ class UserController extends Controller
             return $user;
         });
         
-        // Get available roles for filter
-        $roles = Role::pluck('name')->toArray();
-        
         return Inertia::render('Dashboard/Admin/Users/Index', [
             'users' => $users,
-            'filters' => $request->only(['search', 'role', 'is_active', 'per_page', 'sort_field', 'sort_order']),
-            'availableRoles' => $roles,
+            'filters' => $request->only(['search', 'role', 'status', 'per_page', 'sort_field', 'sort_order']),
+            'availableRoles' => Role::select('name')->get(),
         ]);
     }
     

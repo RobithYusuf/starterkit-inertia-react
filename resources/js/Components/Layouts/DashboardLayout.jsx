@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, usePage, router } from '@inertiajs/react';
 import Sidebar from '@/Components/Dashboard/Sidebar';
 import AlertContainer from '@/Components/UI/AlertContainer';
@@ -12,19 +12,40 @@ export default function DashboardLayout({ children, title = '' }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
+    
+    // Track processed flash messages to prevent duplicates
+    const processedFlashRef = useRef(new Set());
 
-    // Handle flash messages
+    // Handle flash messages - only process each unique message once
     useEffect(() => {
-        if (flash?.success) {
-            addAlert(flash.success, 'success');
-        }
-        if (flash?.error) {
-            addAlert(flash.error, 'error');
-        }
-        if (flash?.warning) {
-            addAlert(flash.warning, 'warning');
-        }
-    }, [flash]);
+        if (!flash) return;
+        
+        const processFlash = (type, message) => {
+            if (!message) return;
+            
+            // Create unique key for this flash message
+            const flashKey = `${type}:${message}`;
+            
+            // Skip if already processed
+            if (processedFlashRef.current.has(flashKey)) return;
+            
+            // Mark as processed
+            processedFlashRef.current.add(flashKey);
+            
+            // Show alert
+            addAlert(message, type);
+            
+            // Clean up after 3 seconds (allow same message again later)
+            setTimeout(() => {
+                processedFlashRef.current.delete(flashKey);
+            }, 3000);
+        };
+        
+        processFlash('success', flash.success);
+        processFlash('error', flash.error);
+        processFlash('warning', flash.warning);
+        processFlash('info', flash.info);
+    }, [flash?.success, flash?.error, flash?.warning, flash?.info, addAlert]);
 
     // Check window size and set sidebar state
     useEffect(() => {

@@ -5,7 +5,7 @@ export default function Breadcrumb({ items = [], separator = 'chevron', classNam
         <nav className={`flex ${className}`} aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2">
                 {items.map((item, index) => (
-                    <li key={index} className="inline-flex items-center">
+                    <li key={item.href || item.label || index} className="inline-flex items-center">
                         {index > 0 && (
                             separator === 'chevron' ? (
                                 <svg className="w-5 h-5 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20">
